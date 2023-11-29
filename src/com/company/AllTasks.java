@@ -76,7 +76,8 @@ public class AllTasks extends JFrame {
     }
     public void updateTasks() {
 
-        HomeworkTask[] tasks = controller.getTasks().toArray(new HomeworkTask[controller.getTasks().size()]);
+        // Retrieve tasks and their urgencies from the controller
+        HomeworkTask[] tasks = controller.late().toArray(new HomeworkTask[controller.late().size()]);
         int[] urgencies = Arrays.stream(controller.urgencyOfATask()).toArray();
 
         StringBuilder s15 = new StringBuilder();

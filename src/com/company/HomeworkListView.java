@@ -49,7 +49,7 @@ public class HomeworkListView extends JFrame{
         add(panel);
 
 
-        // Create the menu bar and menu items
+        // Creating the menu bar and menu items
         JMenuBar menuBar = new JMenuBar();
         JMenu switchMenu = new JMenu("Menu");
         JMenuItem addViewMenuItem = new JMenuItem("Add Homework");
@@ -87,8 +87,10 @@ public class HomeworkListView extends JFrame{
         updateTaskList();
     }
 
+    // Method to update the displayed tasks
     public void updateTaskList() {
 
+        // Getting the tasks to display from the controller that retrieves them from the model
         List<HomeworkTask> dueTomorrow = controller.forTomorrow();
         StringBuilder sb1 = new StringBuilder();
 
@@ -98,6 +100,7 @@ public class HomeworkListView extends JFrame{
         List<HomeworkTask> dontForgetThese = controller.longTermProjects();
         StringBuilder sb3 = new StringBuilder();
 
+        // loop through the tasks and add relevant information to the string builders
         for (HomeworkTask task : dueTomorrow) {
             sb1.append(task.getTask()).append("\n");
         }
@@ -111,9 +114,9 @@ public class HomeworkListView extends JFrame{
             sb3.append(task.getTask()).append(task.getDeadline()).append("\n");
         }
 
+        // set the tasks to be displayed
         forTomorrowArea.setText(sb1.toString());
         otherSuggestionsArea.setText(sb2.toString());
         longTermProjectsArea.setText(sb3.toString());
-
     }
 }

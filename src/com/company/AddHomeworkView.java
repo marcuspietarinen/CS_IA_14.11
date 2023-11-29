@@ -24,10 +24,14 @@ public class AddHomeworkView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1600, 400);
 
-        JPanel panel = new JPanel();
-        JPanel addPanel = new JPanel();
-        JPanel editPanel = new JPanel();
-        JPanel deletePanel = new JPanel();
+        JPanel panel = new JPanel(new GridLayout(0, 3));
+        JPanel addPanel = new JPanel(new GridLayout(5,1));
+        addPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+
+        JPanel editPanel = new JPanel(new GridLayout(3, 1));
+        editPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        JPanel deletePanel = new JPanel(new GridLayout(2, 1));
+        deletePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
         JLabel taskLabel = new JLabel("Task:");
         taskField = new JTextField(20);
@@ -45,6 +49,10 @@ public class AddHomeworkView extends JFrame {
 
         JLabel deleteLabel = new JLabel("Delete task: (write the name of the task you want to delete)");
         deleteField = new JTextField(20);
+
+        JLabel emptyAddLabel = new JLabel();
+        JLabel emptyDeleteLabel = new JLabel();
+        JLabel emptyEditLabel = new JLabel();
 
         JLabel toBeEditedLabel = new JLabel("Reschedule task: (write the name of the task you want to reschedule)");
         JLabel editLabel = new JLabel ("Enter new deadline: (dd.MM.yyyy)");
@@ -82,7 +90,7 @@ public class AddHomeworkView extends JFrame {
                     JOptionPane.showMessageDialog(null, "Invalid deadline format. Please use dd.MM.yyyy.");
                     return; // Do not proceed further
                 }
-
+                // inform the controller about latest changes and ask to update the program
                 controller.addTask(new HomeworkTask(task, deadline, type, importance));
                 controller.updateListView();
                 controller.updateCalendar();
@@ -93,17 +101,6 @@ public class AddHomeworkView extends JFrame {
                 typeComboBox.setSelectedIndex(0);
                 importanceSpinner.setValue(1);
             }
-            // Helper method to validate the deadline format
-            private boolean isValidDeadlineFormat(String deadline) {
-                try {
-                    // Attempt to parse the entered deadline
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                    LocalDate.parse(deadline, formatter);
-                    return true; // Parsing successful, format is valid
-                } catch (DateTimeParseException e) {
-                    return false; // Parsing failed, format is invalid
-                }
-            }
         });
 
 
@@ -113,10 +110,17 @@ public class AddHomeworkView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String toBeRescheduled = toBeEditedField.getText();
                 String newDeadline = editField.getText();
+                if (!isValidDeadlineFormat(newDeadline)) {
+                    // Show an error message to the user
+                    JOptionPane.showMessageDialog(null, "Invalid deadline format. Please use dd.MM.yyyy.");
+                    return; // Do not proceed further
+                }
+
                 for (int i = 0; i < controller.getTasks().size(); i++)
                 {
                     if (toBeRescheduled.equals(controller.getTasks().get(i).getTask()))
                     {
+                        // adding a new tasks with an updated deadline, and deleting the old one
                         controller.addTask(new HomeworkTask(controller.getTasks().get(i).getTask(), newDeadline, controller.getTasks().get(i).getType(), controller.getTasks().get(i).getImportance()));
                         controller.getTasks().remove(controller.getTasks().get(i));
                     }
@@ -137,15 +141,17 @@ public class AddHomeworkView extends JFrame {
         addPanel.add(typeComboBox);
         addPanel.add(importanceLabel);
         addPanel.add(importanceSpinner);
-        //panel.add(new JLabel());
+        addPanel.add(emptyAddLabel);
         addPanel.add(addButton);
         deletePanel.add(deleteLabel);
         deletePanel.add(deleteField);
+        deletePanel.add(emptyDeleteLabel);
         deletePanel.add(deleteButton);
         editPanel.add(toBeEditedLabel);
         editPanel.add(toBeEditedField);
         editPanel.add(editLabel);
         editPanel.add(editField);
+        editPanel.add(emptyEditLabel);
         editPanel.add(editButton);
 
         panel.add(addPanel, BorderLayout.WEST);
@@ -159,8 +165,9 @@ public class AddHomeworkView extends JFrame {
         // Create the menu bar and menu items
         JMenuBar menuBar = new JMenuBar();
         JMenu switchMenu = new JMenu("Menu");
-        JMenuItem listViewItem = new JMenuItem("Homework List");
+        JMenuItem listViewItem = new JMenuItem("Task list");
         listViewItem.addActionListener(new ActionListener() {
+            // make listView visible and addHomeworkView invisible
             public void actionPerformed(ActionEvent e) {
                 controller.toggleListView();
                 controller.toggleAddHomeworkView();
@@ -191,5 +198,18 @@ public class AddHomeworkView extends JFrame {
         setJMenuBar(menuBar);
 
         setVisible(true);
+    }
+
+    // method to check the deadline format
+    private boolean isValidDeadlineFormat(String deadline) {
+        try {
+            // Attempt to parse the entered deadline
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            LocalDate.parse(deadline, formatter);
+
+            return true; // Parsing successful, format is valid
+        } catch (DateTimeParseException e) {
+            return false; // Parsing failed, format is invalid
+        }
     }
 }

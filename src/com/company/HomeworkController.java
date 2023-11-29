@@ -1,13 +1,10 @@
 package com.company;
 import java.io.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
+// Controller responsible for managing interactions between model and views
 public class HomeworkController {
     private HomeworkModel model;
-    private HomeworkTask task;
     private AddHomeworkView addView;
     private HomeworkListView listView;
     private CalendarView calendarView;
@@ -21,6 +18,7 @@ public class HomeworkController {
         this.allTasks = new AllTasks(this);
 
         if (file.exists()) {
+            // If file exists, the program will restore the tasks and update all the views before making them visible
             restoreTasks();
             updateListView();
             updateCalendar();
@@ -36,8 +34,10 @@ public class HomeworkController {
     String itemName = "items.ser";
     File file = new File(itemName);
 
+
     public void saveTasks()
     {
+        // Serializing the tasks to a file
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(itemName));
             out.writeObject(model.getTasks());
@@ -49,6 +49,7 @@ public class HomeworkController {
 
     public void restoreTasks()
     {
+        // Deserializing the tasks from a file
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(itemName));
             List<HomeworkTask> restoredTasks = (List<HomeworkTask>) in.readObject();
@@ -102,28 +103,7 @@ public class HomeworkController {
         addView.setVisible(!isVisible);
     }
 
-
-    // SIMPLIFY IN FUTURE
-//    public void toggleView(String view) {
-//        if (view.equals("list"))
-//    }
-
     public List<HomeworkTask> forTomorrow() {
-        //IMAGINE YOU NEED THESE IN THE FUTURE:
-        //tasks due tomorrow
-        //tasks due overmorrow
-        //tasks due yesterday
-        //tasks due next Monday
-
-//        INSTEAD OF THIS:
-//        model.forOvermorrow();
-//        model.forYesterday();
-//        model.forNextMonday();
-//        return model.forTomorrow();
-
-//        DO THIS:
-//            model.forDate(new Date());
-
         return model.forTomorrow();
     }
 
