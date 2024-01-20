@@ -25,7 +25,7 @@ public class CalendarView extends JFrame {
         weekPanel.setLayout(new GridLayout(0, 7));
 
         setTitle("Calendar");
-        setSize(1000, 625);
+        setSize(1200, 750);
 
         JLabel mondayLabel = new JLabel("Mon.");
         mondayLabel.setForeground(Color.WHITE);
@@ -94,7 +94,7 @@ public class CalendarView extends JFrame {
         weekdays = new JTextArea[7];
         for (int i = 0; i < 7; i++)
         {
-            weekdays[i] = new JTextArea(15, 10);
+            weekdays[i] = new JTextArea(15, 15);
             weekdays[i].setEditable(false);
             weekdays[i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
             weekPanel.add(weekdays[i]);

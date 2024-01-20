@@ -111,7 +111,7 @@ public class HomeworkListView extends JFrame{
 
 
         for (HomeworkTask task : dontForgetThese) {
-            sb3.append(task.getTask()).append(task.getDeadline()).append("\n");
+            sb3.append(task.getTask()).append(" ").append(task.getDeadline()).append("\n");
         }
 
         // set the tasks to be displayed
