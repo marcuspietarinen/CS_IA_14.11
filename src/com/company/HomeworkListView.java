@@ -52,7 +52,7 @@ public class HomeworkListView extends JFrame{
         // Creating the menu bar and menu items
         JMenuBar menuBar = new JMenuBar();
         JMenu switchMenu = new JMenu("Menu");
-        JMenuItem addViewMenuItem = new JMenuItem("Add Homework");
+        JMenuItem addViewMenuItem = new JMenuItem("Add Tasks");
         addViewMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.toggleAddHomeworkView();

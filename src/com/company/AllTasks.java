@@ -35,7 +35,7 @@ public class AllTasks extends JFrame {
 
         JMenuBar menuBar = new JMenuBar();
         JMenu switchMenu = new JMenu("Menu");
-        JMenuItem addViewMenuItem = new JMenuItem("Add Homework");
+        JMenuItem addViewMenuItem = new JMenuItem("Add Tasks");
         addViewMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.toggleAddHomeworkView();
@@ -43,7 +43,7 @@ public class AllTasks extends JFrame {
             }
         });
 
-        JMenuItem listViewItem = new JMenuItem("Homework List");
+        JMenuItem listViewItem = new JMenuItem("Task List");
         listViewItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.toggleListView();
@@ -211,10 +211,10 @@ public class AllTasks extends JFrame {
         textAreas[17].setText(s32.toString());
         textAreas[16].setText(s22.toString());
         textAreas[15].setText(s12.toString());
-        textAreas[14].setText(s51.toString());
-        textAreas[24].setText(s41.toString());
-        textAreas[23].setText(s31.toString());
-        textAreas[22].setText(s21.toString());
-        textAreas[21].setText(s11.toString());
+        textAreas[24].setText(s51.toString());
+        textAreas[23].setText(s41.toString());
+        textAreas[22].setText(s31.toString());
+        textAreas[21].setText(s21.toString());
+        textAreas[20].setText(s11.toString());
     }
 }
